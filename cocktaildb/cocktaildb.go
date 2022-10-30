@@ -12,7 +12,6 @@ import (
 type Recipes struct {
 	Drinks Drinks `json:"drinks"`
 }
-
 type Drinks []Drink
 
 type Drink struct {
@@ -21,7 +20,6 @@ type Drink struct {
 }
 
 func Search(ctx context.Context, query string) (Recipes, error) {
-
 	req, err := http.NewRequest("GET", "https://www.thecocktaildb.com/api/json/v1/1/search.php?", nil)
 	if err != nil {
 		return Recipes{}, err

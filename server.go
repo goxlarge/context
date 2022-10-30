@@ -14,6 +14,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -67,7 +68,7 @@ func handleSearch(w http.ResponseWriter, req *http.Request) {
 	// Run the Google search and print the results.
 	start := time.Now()
 	results, err := cocktaildb.Search(ctx, query)
-
+	fmt.Printf("results: %v", results)
 	elapsed := time.Since(start)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -93,6 +94,9 @@ var resultsTemplate = template.Must(template.New("results").Parse(`
   <ol>
   {{range .Results}}
     <li>{{.StrDrink}} - <a href="{{.StrDrinkThumb}}">{{.StrDrinkThumb}}</a></li>
+	<div class="mt-2 p-4">
+    <img src="{{.StrDrinkThumb}}" width="100px">
+  </div>
   {{end}}
   </ol>
   <p>{{len .Results}} results in {{.Elapsed}}; timeout {{.Timeout}}</p>
